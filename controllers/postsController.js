@@ -1,4 +1,7 @@
+const path = require('path');
 const posts = require('../db/posts.js');
+
+
 
 const index = (req, res) => {
     res.format({
@@ -8,7 +11,7 @@ const index = (req, res) => {
                 html += `
             <div>
                <h1>${post.title}</h1>
-               <img width="500" src="imgs/posts/${post.image}" alt="${post.title}">
+               <img width="500" src="/imgs/posts/${post.image}" alt="${post.title}">
                <p>${post.content}</p>
                <ul>
             `;
@@ -79,8 +82,20 @@ const create = (req, res) => {
     })
 }
 
+const download = (req, res) => { 
+    const slug = req.params.slug;
+    const post = posts.find(post => post.slug === slug);
+    if (post) {
+        const file = path.join(__dirname + '/../public/imgs/posts/' + post.image)
+        res.download(file); 
+    } else {
+        res.send("<h1>Non esiste</h1>")
+    }
+}
+
 module.exports = {
     index,
     show,
-    create
+    create,
+    download 
 }
