@@ -3,13 +3,12 @@ const app = express();
 const port = 3000;
 
 const postsRouter = require('./routers/posts.js');
+const homeRouter = require('./routers/home.js');
 
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.send(`<h1>Benvenuto nel mio blog</h1>`)
-});
+app.use('/', homeRouter);
 
 app.use('/posts', postsRouter);
 
