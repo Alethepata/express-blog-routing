@@ -39,8 +39,8 @@ const show = (req, res) => {
                    <p>${post.content}</p>
                    <ul>
                 `;
-                    post.tags.forEach(tag => html += `<li>${tag}</li>`);
-                    html += '</ul></div>';
+                post.tags.forEach(tag => html += `<li>${tag}</li>`);
+                html += '</ul></div>';
             } else {
                 html += `
                 <div>
@@ -53,7 +53,7 @@ const show = (req, res) => {
         },
         json: () => {
             if (post) {
-                res.json(post); 
+                res.json(post);
             } else {
                 res.status(404).json({
                     error: 'Not Found',
@@ -62,9 +62,25 @@ const show = (req, res) => {
             }
         }
     })
+};
+
+const create = (req, res) => { 
+    res.format({
+        html: () => {
+            let html;
+            html += "<h1>Creazione nuovo post</h1>"
+            res.send(html);
+        },
+        json: () => { 
+            res.status(406).json({
+                error: 'Not Accetable',
+            });
+        }
+    })
 }
 
 module.exports = {
     index,
-    show
+    show,
+    create
 }
