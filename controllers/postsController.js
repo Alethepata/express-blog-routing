@@ -8,15 +8,31 @@ const index = (req, res) => {
         html: () => {
             let html;
             posts.forEach(post => {
-                html += `
-            <div>
-               <h1>${post.title}</h1>
-               <img width="500" src="/imgs/posts/${post.image}" alt="${post.title}">
-               <p>${post.content}</p>
-               <ul>
-            `;
-                post.tags.forEach(tag => html += `<li>${tag}</li>`);
-                html += '</ul></div>';
+                html +=
+                    `
+                    <div class="container">
+                        <div class="card" style="width: 18rem; border: 1px solid black; padding:20px">
+                            <img src="/imgs/posts/${post.image}" style="width:100%" alt="${post.title}">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h3>${post.title}</h3>
+                                </div>
+                                <div class="card-text">
+                                    <p>${post.content}</p>
+                                    <div class="tags">
+                    `
+                
+                post.tags.forEach(tag => html += `<span style="margin:2px">#${tag}</span>`);
+                
+                html +=
+                `
+                                </div>
+                                </div>
+                                <a href="/posts/${post.slug}">${post.title}</a>
+                            </div>
+                        </div>
+                    </div>
+                `
                 
             })
             res.send(html);
